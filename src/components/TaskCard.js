@@ -9,9 +9,19 @@ const PRIORITY_COLORS = {
   high: "bg-red-200 text-red-800",
 };
 
-export default function TaskCard({ task, onEdit }) {
+export default function TaskCard({ task, onEdit, selectedTasks, setSelectedTasks }) {
   const [deleting, setDeleting] = useState(false);
+ 
 
+ 
+
+  function getDaysUntilDue(dueDate) {
+    if (!dueDate) return null;
+    const today = new Date();
+    const due = new Date(dueDate);
+    const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+    return diff;
+  }
   const handleDelete = async () => {
     if (!window.confirm("Delete this task?")) return;
 
@@ -50,9 +60,44 @@ export default function TaskCard({ task, onEdit }) {
         )}
 
         {task.priority && (
-          <span className={`text-xs font-semibold px-2 py-1 rounded ${PRIORITY_COLORS[task.priority] || "bg-gray-200"}`}>
+          <span
+            className={`text-xs font-semibold px-2 py-1 rounded ${PRIORITY_COLORS[task.priority] || "bg-gray-200"}`}
+          >
             {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
           </span>
+        )}
+
+        {task.dueDate && (
+          <div className="mt-2 pt-2 border-t">
+            {(() => {
+              const daysLeft = getDaysUntilDue(task.dueDate);
+              const isOverdue = daysLeft < 0;
+              const isDueToday = daysLeft === 0;
+              const isDueSoon = daysLeft > 0 && daysLeft <= 3;
+
+              return (
+                <p
+                  className={`text-xs font-semibold ${
+                    isOverdue
+                      ? "text-red-600"
+                      : isDueToday
+                        ? "text-orange-600"
+                        : isDueSoon
+                          ? "text-yellow-600"
+                          : "text-gray-600"
+                  }`}
+                >
+                  {isOverdue
+                    ? `⚠️ Overdue by ${Math.abs(daysLeft)} day(s)`
+                    : isDueToday
+                      ? "📌 Due today!"
+                      : isDueSoon
+                        ? `⏰ Due in ${daysLeft} day(s)`
+                        : `📅 Due: ${new Date(task.dueDate).toLocaleDateString()}`}
+                </p>
+              );
+            })()}
+          </div>
         )}
 
         {task.dueDate && (
@@ -91,6 +136,22 @@ export default function TaskCard({ task, onEdit }) {
           <option value="in_progress">In Progress</option>
           <option value="done">Done</option>
         </select>
+      </div>
+
+      <div className="mt-3 flex items-center gap-2">
+        <input
+          type="checkbox"
+          checked={selectedTasks.includes(task.id)}
+          onChange={() => {
+            setSelectedTasks((prev) =>
+              prev.includes(task.id)
+                ? prev.filter((id) => id !== task.id)
+                : [...prev, task.id],
+            );
+          }}
+          className="mr-2"
+        />
+        <label className="text-sm text-gray-600">Select task</label>
       </div>
     </div>
   );

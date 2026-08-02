@@ -26,14 +26,12 @@ export default function Navbar() {
 
   return (
     <nav className={`w-full ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-800 text-white'} p-4 flex justify-between items-center sticky top-0 z-50 transition`}>
-      <Link href="/" className="text-xl font-bold">MyApp</Link>
+      <Link href="/" className="text-xl font-bold">PlanIt</Link>
       
       <ul className="hidden md:flex space-x-6">
         <li><Link href="/" className="hover:text-blue-400">Home</Link></li>
         <li><Link href="/about" className="hover:text-blue-400">About</Link></li>
-        <li><Link href="/products" className="hover:text-blue-400">Products</Link></li>
         <li><Link href="/contact" className="hover:text-blue-400">Contact</Link></li>
-        <li><Link href="/blog" className="hover:text-blue-400">Blog</Link></li>
         <li><Link href="/tasks" className="hover:text-blue-400">Tasks</Link></li>
         
         {user ? (

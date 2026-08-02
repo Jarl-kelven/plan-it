@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "My Next App",
-  description: "My practice space for Next.js",
+  title: "Plan-It",
+  description: "Task management app built with Next.js, Firebase, and Tailwind CSS.",
 };
 
 export default function RootLayout({ children }) {
