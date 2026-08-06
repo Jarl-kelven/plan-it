@@ -30,8 +30,7 @@ export default function Navbar() {
       
       <ul className="hidden md:flex space-x-6">
         <li><Link href="/" className="hover:text-blue-400">Home</Link></li>
-        <li><Link href="/about" className="hover:text-blue-400">About</Link></li>
-        <li><Link href="/contact" className="hover:text-blue-400">Contact</Link></li>
+        
         <li><Link href="/tasks" className="hover:text-blue-400">Tasks</Link></li>
         
         {user ? (
