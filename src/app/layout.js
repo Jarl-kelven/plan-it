@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { DarkModeProvider } from "@/lib/darkModeContext";
+import { siteMetadata } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,11 +15,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Plan-It",
-  description: "Task management app built with Next.js, Firebase, and Tailwind CSS.",
-};
 
+export const metadata = {
+  title: siteMetadata.title,
+  description: siteMetadata.description,
+  openGraph: {
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    url: siteMetadata.url,
+  },
+};
 export default function RootLayout({ children }) {
   return (
     <html

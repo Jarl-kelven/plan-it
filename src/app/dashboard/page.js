@@ -4,6 +4,7 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import withAuth from "@/lib/withAuth";
+import Link from "next/link";
 
 function Dashboard({ user }) {
   const router = useRouter();
@@ -31,6 +32,12 @@ function Dashboard({ user }) {
         <p className="text-sm text-gray-500 mb-6">
           Your User ID: {user.uid}
         </p>
+
+        <div> 
+          <Link href="/dashboard/analytics" className="my-2 text-blue-500 hover:underline">
+            View your stats
+          </Link>
+        </div>
 
         <button
           onClick={handleLogout}

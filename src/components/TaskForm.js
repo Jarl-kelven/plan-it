@@ -1,9 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { db } from "@/lib/firebase";
 import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
+import { useNotification } from "@/lib/notifications";
 
 export default function TaskForm({ userId, task, onTaskAdded, onCancel }) {
+  const { showNotification } = useNotification();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("to_do");
@@ -16,12 +18,14 @@ export default function TaskForm({ userId, task, onTaskAdded, onCancel }) {
   // Load task data if editing
   useEffect(() => {
     if (task) {
-      setTitle(task.title);
-      setDescription(task.description || "");
-      setStatus(task.status);
-      setPriority(task.priority || "medium");
-      setCategory(task.category)
-      setDueDate(task.dueDate || "");
+      startTransition(() => {
+        setTitle(task.title);
+        setDescription(task.description || "");
+        setStatus(task.status);
+        setPriority(task.priority || "medium");
+        setCategory(task.category || "");
+        setDueDate(task.dueDate || "");
+      });
     }
   }, [task]);
 
@@ -63,10 +67,12 @@ export default function TaskForm({ userId, task, onTaskAdded, onCancel }) {
         });
       }
 
+      showNotification("Task saved successfully!", "success");
       onTaskAdded();
     } catch (err) {
       console.error("Error:", err);
       setError("Failed to save task");
+      showNotification("Failed to save task", "error");
     } finally {
       setLoading(false);
     }

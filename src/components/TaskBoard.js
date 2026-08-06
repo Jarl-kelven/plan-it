@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import TaskCard from "./TaskCard";
 import TaskForm from "./TaskForm";
+import TaskSkeleton from "./TaskSkeleton";
 
 const STATUSES = [
   { id: "to_do", label: "To Do", color: "bg-gray-100" },
@@ -73,16 +74,52 @@ export default function TaskBoard({ userId }) {
   });
 
   const handleBulkMarkDone = async () => {
-  if (selectedTasks.length === 0) return;
-  
-  for (const taskId of selectedTasks) {
-    await updateDoc(doc(db, "tasks", taskId), {
-      status: "done",
-    });
-  }
-  setSelectedTasks([]);
-};
+    if (selectedTasks.length === 0) return;
 
+    for (const taskId of selectedTasks) {
+      await updateDoc(doc(db, "tasks", taskId), {
+        status: "done",
+      });
+    }
+    setSelectedTasks([]);
+  };
+
+  // Exporting tasks as CSV is a useful feature for users who want to analyze or share their task data outside of the application. Below is a function that you can add to your `TaskBoard` component to export the filtered tasks as a CSV file.
+  const exportTasksAsCSV = () => {
+    if (filteredTasks.length === 0) {
+      alert("No tasks to export");
+      return;
+    }
+
+    const headers = [
+      "Title",
+      "Description",
+      "Status",
+      "Priority",
+      "Category",
+      "Due Date",
+    ];
+    const rows = filteredTasks.map((task) => [
+      task.title,
+      task.description || "",
+      task.status,
+      task.priority,
+      task.category || "",
+      task.dueDate || "",
+    ]);
+
+    let csv = headers.join(",") + "\n";
+    rows.forEach((row) => {
+      csv += row.map((cell) => `"${cell}"`).join(",") + "\n";
+    });
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "tasks.csv";
+    a.click();
+  };
 
   const getTasksByStatus = (status) => {
     return filteredTasks.filter((task) => task.status === status);
@@ -93,7 +130,11 @@ export default function TaskBoard({ userId }) {
     setEditingTask(null);
   };
 
-  if (loading) return <p className="text-center mt-10">Loading tasks...</p>;
+  if (loading) return <div className="space-y-3">
+    {[...Array(3)].map((_, i) => (
+      <TaskSkeleton key={i} />
+    ))}
+  </div>
 
   return (
     <div>
@@ -257,6 +298,13 @@ export default function TaskBoard({ userId }) {
           </div>
         </div>
       )}
+
+      <button
+        onClick={exportTasksAsCSV}
+        className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+      >
+        📥 Export CSV
+      </button>
 
       <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
         <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">

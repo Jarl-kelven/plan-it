@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎯 PlanIt - Task Management App
 
-## Getting Started
+A modern, feature-rich task management application built with Next.js, Firebase, and Tailwind CSS.
 
-First, run the development server:
+## 🌟 Features
+
+- ✅ **Real-time Task Management** - Create, edit, delete tasks instantly
+- ✅ **Smart Filtering** - Filter by status, priority, category, and search
+- ✅ **Dark Mode** - Toggle between light and dark themes with persistence
+- ✅ **Analytics Dashboard** - Track your productivity with completion rates
+- ✅ **Due Date Tracking** - Visual indicators for overdue and upcoming tasks
+- ✅ **Bulk Actions** - Mark multiple tasks as done at once
+- ✅ **CSV Export** - Download your tasks for analysis
+- ✅ **Responsive Design** - Works perfectly on mobile, tablet, and desktop
+- ✅ **Authentication** - Secure Google Sign-in with Firebase
+- ✅ **Loading States** - Beautiful skeleton loaders for better UX
+
+## 🚀 Tech Stack
+
+- **Frontend:** Next.js 14, React, Tailwind CSS
+- **Backend:** Firebase (Firestore, Authentication)
+- **Hosting:** Vercel
+- **Notifications:** Custom toast system
+
+## 📦 Installation
 
 ```bash
+# Clone the repo
+git clone https://github.com/yourusername/planit.git
+cd planit
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🔐 Environment Variables
+Create .env.local:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+text
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+NEXT_PUBLIC_FIREBASE_API_KEY=your_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+🎨 Features in Detail
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Task Management
+Create tasks with title, description, priority, category, and due date
+Edit tasks inline
+Delete tasks with confirmation
+Change status with dropdown
+Filtering & Search
+Search by title or description
+Filter by priority (Low, Medium, High)
+Filter by status (To Do, In Progress, Done)
+Filter by category
+Dynamic category dropdown
+Analytics
+Total tasks count
+Completed tasks count
+In-progress tasks count
+Completion rate with progress bar
+Dark Mode
+Toggle between light and dark themes
+Persists across sessions
+Smooth transitions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+📱 Screenshots
+[Add screenshots here]
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+🚢 Deployment
+Deployed on Vercel: https://plan-it-bay-zeta.vercel.app
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📝 License
+MIT License - feel free to use this project however you want!
+
+👨‍💻 Author
+Jarl Kelven
+

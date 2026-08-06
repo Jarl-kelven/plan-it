@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/*
+
+Sitemap: https://plan-it-bay-zeta.vercel.app/sitemap.xml
